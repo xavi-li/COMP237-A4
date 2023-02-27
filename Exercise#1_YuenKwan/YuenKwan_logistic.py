@@ -317,4 +317,14 @@ Looking at the classification report for threshold 0.5, we can see that the prec
 When we change the threshold to 0.75, we can see that the precision for class 1 (survived) increases, while the recall decreases. This means that the model is now more precise in identifying passengers who survived, but it may miss some of the passengers who actually survived.
 
 In terms of accuracy, we can see that the accuracy increases when we change the threshold to 0.75. However, we need to be careful when using accuracy as the sole metric to evaluate the model. In cases where the classes are imbalanced (as in this case), accuracy may not be a good indicator of the model's performance. It is important to look at precision and recall as well to get a better understanding of the model's performance.
+
+
+# f10, f11)
+To compare the values of accuracy, precision, and recall generated at the threshold 0.5 and 0.75, you can look at the respective values in the classification report for each threshold.
+
+At the threshold of 0.5, the model has an accuracy of 79.10%, precision of 0.68 for class 1, and recall of 0.72 for class 1.
+
+At the threshold of 0.75, the model has an accuracy of 82.09%, precision of 0.90 for class 1, and recall of 0.52 for class 1.
+
+We can observe that increasing the threshold from 0.5 to 0.75 has resulted in an increase in accuracy, but at the cost of lower recall for class 1. The precision for class 1 has increased, indicating that the model has become more conservative in its predictions, resulting in fewer false positives.
 '''
