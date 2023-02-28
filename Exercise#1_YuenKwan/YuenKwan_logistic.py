@@ -9,7 +9,7 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
+import seaborn as sns
 
 # Req.d8: Accept a dataframe as an argument and normalizes all the datapoint.
 def normalize(dataframe):
@@ -49,19 +49,19 @@ print(titanic_YuenKwan.describe())
 # Req.c: Data Visualizaion
 plt.rcParams['figure.dpi'] = 300
 # c1a) Bar chart showing # of survived by passenger class
-survived_class = pd.crosstab(index=titanic_YuenKwan['Survived'], columns=titanic_YuenKwan['Pclass'])
+survived_class = pd.crosstab(index=titanic_YuenKwan['Pclass'], columns=titanic_YuenKwan['Survived'])
 survived_class.plot(kind='bar')
 plt.title("Number of Survivors by Passenger Class (YuenKwan)")
-plt.xlabel("Survived")
+plt.xlabel("Passenger Class")
 plt.ylabel("Count")
 plt.xticks(rotation=0)
 plt.show()
 
 # c1b) Bar chart showing # of survived by gender
-survived_gender = pd.crosstab(index=titanic_YuenKwan['Survived'], columns=titanic_YuenKwan['Sex'])
+survived_gender = pd.crosstab(index=titanic_YuenKwan['Sex'], columns=titanic_YuenKwan['Survived'])
 survived_gender.plot(kind='bar')
 plt.title("Number of Survivors by Gender (YuenKwan)")
-plt.xlabel("Survived")
+plt.xlabel("Gender")
 plt.ylabel("Count")
 plt.xticks(rotation=0)
 plt.show()
@@ -239,7 +239,7 @@ y_pred_YuenKwan = YuenKwan_model.predict_proba(x_test_YuenKwan)
 y_pred_YuenKwan_flag_05 = y_pred_YuenKwan[:,1] > 0.5
 
 # f4) Import evaluation metrics
-from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
+from sklearn.metrics import confusion_matrix, accuracy_score, classification_report, ConfusionMatrixDisplay
 
 # f5) Print the accuracy of the model on the test data
 accuracy_YuenKwan_05 = accuracy_score(y_test_YuenKwan, y_pred_YuenKwan_flag_05)
@@ -249,6 +249,18 @@ print(f"Accuracy: {accuracy_YuenKwan_05:.2%}")
 # f6) Print the confusion matrix
 print('----------- f6) Confusion Matrix (Threshold = 0.5) -------------')
 print(confusion_matrix(y_test_YuenKwan, y_pred_YuenKwan_flag_05))
+
+cm_05 = confusion_matrix(y_test_YuenKwan, y_pred_YuenKwan_flag_05)
+cm_05_df = pd.DataFrame(cm_05, index=['0', '1'], columns=['0', '1'])
+sns.heatmap(cm_05_df, annot=True, fmt='d')
+plt.xlabel('Predict Values')
+plt.ylabel('Actual Values')
+plt.show()
+
+cm_05 =confusion_matrix(y_test_YuenKwan, y_pred_YuenKwan_flag_05, labels=YuenKwan_model.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm_05,display_labels=YuenKwan_model.classes_)
+disp.plot()
+plt.show()
 
 # f7) Print the classification report
 print('----------- f7) Classification Report (Threshold = 0.5) -------------')
@@ -266,9 +278,22 @@ print(f"Accuracy: {accuracy_YuenKwan_075:.2%}")
 print('----------- f9) Confusion Matrix (Threshold = 0.75) -------------')
 print(confusion_matrix(y_test_YuenKwan, y_pred_YuenKwan_flag_075))
 
+cm_075 = confusion_matrix(y_test_YuenKwan, y_pred_YuenKwan_flag_075)
+cm_075_df = pd.DataFrame(cm_075, index=['0', '1'], columns=['0', '1'])
+sns.heatmap(cm_075_df, annot=True, fmt='d')
+plt.xlabel('Predict Values')
+plt.ylabel('Actual Values')
+plt.show()
+
+cm_075 =confusion_matrix(y_test_YuenKwan, y_pred_YuenKwan_flag_075, labels=YuenKwan_model.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm_075,display_labels=YuenKwan_model.classes_)
+disp.plot()
+plt.show()
+
 # f9) Print the classification report
 print('----------- f9) Classification Report (Threshold = 0.75) -------------')
 print(classification_report(y_test_YuenKwan, y_pred_YuenKwan_flag_075))
+
 
 '''
 ----------- f5) Model Accuracy (Threshold = 0.5) -------------
